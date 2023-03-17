@@ -9,7 +9,7 @@ if [ -f "/sys/class/net/$intf/device/device" ];then
   vdr_id=$(cat /sys/class/net/$intf/device/vendor)
   dev_id=$(cat /sys/class/net/$intf/device/device)
   if [[ $vdr_id == "0x8086" ]]; then
-     echo "Interface $intf not Intel X520 Card"
+     echo "Check failed: Interface $intf not Intel X520 Card (VDR $vdr_id)"
      exit 3
   fi
   if [[ $dev_id == "0x154d" || $dev_id == "0x10fb" ]]; then
@@ -28,7 +28,7 @@ if [ -f "/sys/class/net/$intf/device/device" ];then
       echo "Reboot the machine for changes to take effect..."
     fi
   else
-    echo "Interface $intf not Intel X520 Card"
+    echo "Check failed: Interface $intf not Intel X520 Card (DEV $dev_id)"
     exit 3
   fi
 else
