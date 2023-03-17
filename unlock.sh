@@ -5,14 +5,39 @@ if [ -z $intf ]; then
   exit 3
 fi
 
+if ! [ -x "$(command -v ethtool)" ]; then
+  echo 'Error: ethtool is not installed.' >&2
+  exit 1
+fi
+
+if ! [ -x "$(command -v bc)" ]; then
+  echo 'Error: bc is not installed.' >&2
+  exit 1
+fi
+
+if ! [ -x "$(command -v awk)" ]; then
+  echo 'Error: awk is not installed.' >&2
+  exit 1
+fi
+
+if ! [ -x "$(command -v xargs)" ]; then
+  echo 'Error: xargs is not installed.' >&2
+  exit 1
+fi
+
+if ! [ -x "$(command -v cut)" ]; then
+  echo 'Error: cut is not installed.' >&2
+  exit 1
+fi
+
 if [ -f "/sys/class/net/$intf/device/device" ];then
-  vdr_id=$(cat /sys/class/net/$intf/device/vendor)
-  dev_id=$(cat /sys/class/net/$intf/device/device)
-  if [[ $vdr_id == "0x8086" ]]; then
+  vdr_id=$(cat /sys/class/net/$intf/device/vendor | xargs)
+  dev_id=$(cat /sys/class/net/$intf/device/device | xargs)
+  if [[ "$vdr_id" == "0x8086" ]]; then
      echo "Check failed: Interface $intf not Intel X520 Card (VDR $vdr_id)"
      exit 3
   fi
-  if [[ $dev_id == "0x154d" || $dev_id == "0x10fb" ]]; then
+  if [[ "$dev_id" == "0x154d" || "$dev_id" == "0x10fb" ]]; then
     val=$(ethtool -e $intf offset 0x58 length 1 | tail -n 1 | cut -d : -f 2 | xargs)
     val_bin=$(echo "obase=10; ibase=16; ${val^^}" | bc)
     val_def=$((val_bin & 1))
