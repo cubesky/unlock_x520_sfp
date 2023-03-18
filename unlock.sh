@@ -9,6 +9,7 @@ Powered by 网络世界小白 & LiYin
 EOF
 
 intf=$1
+echo "Checking for interface $intf..."
 if [ -z $intf ]; then
   echo "Interface $intf not set."
   exit 3
