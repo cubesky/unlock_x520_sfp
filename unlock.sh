@@ -1,4 +1,13 @@
 #!/bin/bash
+cat << 'EOF'
+  __  __     __         __     _  ______ ___  ___
+ / / / /__  / /__  ____/ /__  | |/_/ __/|_  |/ _ \
+/ /_/ / _ \/ / _ \/ __/  '_/ _>  </__ \/ __// // /
+\____/_//_/_/\___/\__/_/\_\ /_/|_/____/____/\___/
+
+Powered by 网络世界小白 & LiYin
+EOF
+
 intf=$1
 if [ -z $intf ]; then
   echo "Interface $intf not set."
@@ -7,11 +16,6 @@ fi
 
 if ! [ -x "$(command -v ethtool)" ]; then
   echo 'Error: ethtool is not installed.' >&2
-  exit 1
-fi
-
-if ! [ -x "$(command -v awk)" ]; then
-  echo 'Error: awk is not installed.' >&2
   exit 1
 fi
 
