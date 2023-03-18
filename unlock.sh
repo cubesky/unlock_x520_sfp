@@ -1,10 +1,11 @@
 #!/bin/bash
 cat << 'EOF'
-  __  __     __         __     _  ______ ___  ___
- / / / /__  / /__  ____/ /__  | |/_/ __/|_  |/ _ \
-/ /_/ / _ \/ / _ \/ __/  '_/ _>  </__ \/ __// // /
-\____/_//_/_/\___/\__/_/\_\ /_/|_/____/____/\___/
-
+  _   _       _            _           ____ ____   ___  
+ | | | |_ __ | | ___   ___| | __ __  _| ___|___ \ / _ \ 
+ | | | | '_ \| |/ _ \ / __| |/ / \ \/ /___ \ __) | | | |
+ | |_| | | | | | (_) | (__|   <   >  < ___) / __/| |_| |
+  \___/|_| |_|_|\___/ \___|_|\_\ /_/\_\____/_____|\___/ 
+                                                        
 Powered by 网络世界小白 & LiYin
 EOF
 
@@ -48,7 +49,7 @@ if [ -f "/sys/class/net/$intf/device/device" ];then
       echo "Unlocking..."
       new_val_dec=$((val_bin | 1))
       new_val=$(printf '%x\n' $new_val_dec)
-      magic="$dev_id8086"
+      magic=$dev_id"8086"
       echo "Running command: ethtool -E $intf magic $magic offset 0x58 value 0x$new_val length 1"
       ethtool -E $intf magic $magic offset 0x58 value 0x$new_val length 1
       echo "Reboot the machine for changes to take effect..."
