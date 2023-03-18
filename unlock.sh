@@ -49,6 +49,7 @@ if [ -f "/sys/class/net/$intf/device/device" ];then
       new_val_dec=$((val_bin | 1))
       new_val=$(printf '%x\n' $new_val_dec)
       magic="$dev_id8086"
+      echo "Running command: ethtool -E $intf magic $magic offset 0x58 value 0x$new_val length 1"
       ethtool -E $intf magic $magic offset 0x58 value 0x$new_val length 1
       echo "Reboot the machine for changes to take effect..."
     fi
